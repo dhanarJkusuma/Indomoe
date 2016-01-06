@@ -33,6 +33,7 @@
         <div class="box-body">
           <form method="POST" enctype="multipart/form-data" id="episode-add" action="{{ url('admin/episode/update') }}/{{ $data->id }}" >
             <!-- text input -->
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group">
                 <div class="form-group">
                     <label>Anime Title</label>
@@ -148,8 +149,7 @@
               $('.image-preview1').hover(
                   function () {
                      $('.image-preview1').popover('show');
-                  }, 
-                   function () {
+                  }, function () {
                      $('.image-preview1').popover('hide');
                   }
               );    

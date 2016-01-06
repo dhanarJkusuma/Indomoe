@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -16,6 +17,8 @@ class AnimeController extends Controller
 	
 	public function __construct()
 	{
+
+
 		return $this->middleware('auth');
 	}
 
@@ -84,7 +87,9 @@ class AnimeController extends Controller
 	    $anime->rating = Input::get('rating');
 	    $anime->description = Input::get('description');
 	    $anime->season = Input::get('season');
-
+	    $anime->publisher = Input::get('publisher');
+	    $anime->year = Input::get('year');
+	    $anime->status = Input::get('status');
 	    $anime->save();
 		return Input::get('category');
 	}
@@ -98,7 +103,9 @@ class AnimeController extends Controller
   		$anime->rating = Input::get('rating');
   		$anime->description = Input::get('description');
   		$anime->season = Input::get('season');
-
+  		$anime->publisher = Input::get('publisher');
+	    $anime->year = Input::get('year');
+	    $anime->status = Input::get('status');
   		$anime->save();
   		return $_POST['title'];
    	}

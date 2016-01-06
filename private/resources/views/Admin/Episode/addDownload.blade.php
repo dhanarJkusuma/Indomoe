@@ -242,7 +242,7 @@
         url: "{{ url('admin/episode/getDownload/get') }}",
         type: "POST",
         async:false,
-        data: { id : id_download , _token : csrf() },
+        data: { id : id_download , _token : csrf },
         success: function(result)
         {
           $('#id_download').val(result.id);

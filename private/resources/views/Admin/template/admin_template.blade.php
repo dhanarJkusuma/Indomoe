@@ -1,3 +1,4 @@
+@if(Auth::check())
 <!DOCTYPE html>
 <html>
   <head>
@@ -99,7 +100,9 @@
               <!-- User Account -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                 @if(Auth::check())
+                  <img src="{{ Auth::user()->image }}" class="user-image" width="160" height="160" alt="User Image">
+                 @endif
                   <span class="hidden-xs">
                     @if(Auth::check())
                           {{ Auth::user()->email }}
@@ -109,32 +112,23 @@
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    @if(Auth::check())
+                    <img src="{{ Auth::user()->image }}"  class="img-circle" alt="User Image">
+                    @endif
                     <p>
-                   
-                       {{ Session::get('user') }}
-                      <small>Member since Nov. 2012</small>
+                    @if(Auth::check())
+                       {{ Auth::user()->name }}
+                    @endif
                     </p>
                   </li>
-                  <!-- Menu Body -->
-                  <li class="user-body">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
-                    </div>
-                  </li>
+                  
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                      <a href="{{ url('admin/profile') }}" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="{{ url('logout') }}" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -155,10 +149,14 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            @if(Auth::check())
+              <img src="{{ Auth::user()->image }}" width="160" height="160" class="img-circle" alt="User Image">
+            @endif
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+            @if(Auth::check())
+              <p>{{ Auth::user()->name }}</p>
+            @endif
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
@@ -310,3 +308,4 @@
   </body>
 
 </html>
+@endif

@@ -46,7 +46,7 @@
                   </div>
               
             </div>
-            
+            <input type="hidden" value="{{ csrf_token() }}" name="_token">
             <div class="form-group">
               <label>Title Post</label>
               <input type="text" id="title_post" class="form-control" name="title" placeholder="Title Post">

@@ -124,6 +124,7 @@
             </div>
             <div class="modal-body">
               <div class="box-body">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="id" value="{{ $data->id }}">
                 Delete this Episode ? 
               </div><!-- /.box-body -->

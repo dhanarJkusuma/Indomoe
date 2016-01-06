@@ -18,8 +18,11 @@
                   <th>Category</th>
                   <th>Cover</th>
                   <th>Studio</th>
+                  <th>Publisher</th>
+                  <th>Year</th>
                   <th>Rating</th>
                   <th>Season</th>
+                  <th>Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -92,6 +95,24 @@
                   <label>Studio</label>
                   <input type="text" id="studio" class="form-control" name="studio" placeholder="Studio">
                 </div>
+    
+                <div class="form-group">
+                  <label>Publisher</label>
+                  <input type="text" id="publisher" class="form-control" name="publisher" placeholder="Publisher">
+                </div>            
+
+                <div class="form-group">
+                  <label>Status</label>
+                  <div class="row">
+                  <div class="col-md-6">
+                    <select class="form-control" name="status" id="status">
+                      <option value="ongoing">On-Going</option>
+                      <option value="finish">Finish</option>
+                    </select>
+                  </div>
+                  </div>
+                </div>
+
 
                 <div class="form-group">
                   <label>Season</label>
@@ -113,6 +134,11 @@
                   </div>
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <input type="hidden" id="year-anime" class="form-control" name="year" placeholder="Year">
+                </div>
+
                 <input type="hidden" name="season" id="anime_season">
                 <div class="form-group">
                   <label>Rating</label>
@@ -186,8 +212,11 @@
             { "data": "category" },
             { "data": "cover"},
             { "data": "studio" },
+            { "data": "publisher" },
+            { "data": "year" },
             { "data": "rating" },
             { "data": "season" },
+            { "data": "status" },
             { "data": "action" }          
             ]
        
@@ -217,6 +246,8 @@
           $('#fix-category').val($('#category').val());
           var season = $('#season').val() + " " + $('#year').val();
           $('#anime_season').val(season);
+          $('#year-anime').val($('#year').val());  
+          
           updateAnime(id,tableCat);
           return false;
         });

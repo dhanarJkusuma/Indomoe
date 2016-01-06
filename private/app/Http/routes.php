@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +24,9 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
+
+	Route::get('/', 'WeaboController@index');
+
 	
 	/* GET CATEGORY ROUTES */
 	
@@ -75,6 +75,15 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('admin/episode/getDownload/get','DownloadController@selectedDownload');
 	Route::post('admin/episode/getDownload/update/{id}','DownloadController@updateDownload');
 	Route::post('admin/episode/getDownload/destroy','DownloadController@destroyDownload');
+
+
+	Route::get('admin/profile','UserController@profile');
+	Route::post('admin/profile/display','UserController@setDP');
+	Route::post('admin/profile/bio','UserController@editProfile');
+	Route::post('admin/profile/cpass','UserController@changePassword');
+
+	/* GET WEABO ROUTES */
+	Route::post('weabo/search','WeaboController@searchResult');
 
 });
 

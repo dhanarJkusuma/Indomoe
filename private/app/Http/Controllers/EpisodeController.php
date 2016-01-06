@@ -45,7 +45,7 @@ class EpisodeController extends Controller
 	      	$filename1 =$newEpisode->title .'_1.'.$request->file('image1')->getClientOriginalExtension();
 			$filename1 = str_replace(' ', '_', $filename1);
 	      	$request->file('image1')->move($destination_path, $filename1);
-		    $newEpisode->screenshot1 =  url('public/image_store/anime_episode') . "/" . $filename1;
+		    $newEpisode->screenshot1 =  url('private/image_store/anime_episode') . "/" . $filename1;
 		}
 
 		if ($request->hasFile('image2')) 
@@ -53,7 +53,7 @@ class EpisodeController extends Controller
 			$filename2 =$newEpisode->title .'_2.'.$request->file('image2')->getClientOriginalExtension();
 			$filename2 = str_replace(' ', '_', $filename2);
 	      	$request->file('image2')->move($destination_path, $filename2);
-		    $newEpisode->screenshot2 =  url('public/image_store/anime_episode') . "/" . $filename2;
+		    $newEpisode->screenshot2 =  url('private/image_store/anime_episode') . "/" . $filename2;
 		}
 
 		if ($request->hasFile('image3')) 
@@ -61,7 +61,7 @@ class EpisodeController extends Controller
 			$filename3 =$newEpisode->title .'_3.'.$request->file('image3')->getClientOriginalExtension();
 			$filename3 = str_replace(' ', '_', $filename3);
 	      	$request->file('image3')->move($destination_path, $filename3);
-		    $newEpisode->screenshot3 =  url('public/image_store/anime_episode') . "/" . $filename3;
+		    $newEpisode->screenshot3 =  url('private/image_store/anime_episode') . "/" . $filename3;
 		}
 
 		$newEpisode->save();
@@ -118,7 +118,7 @@ class EpisodeController extends Controller
 	      	$filename1 =$newEpisode->title .'_1.'.$request->file('image1')->getClientOriginalExtension();
 			$filename1 = str_replace(' ', '_', $filename1);
 	      	$request->file('image1')->move($destination_path, $filename1);
-		    $newEpisode->screenshot1 =  url('public/image_store/anime_episode') . "/" . $filename1;
+		    $newEpisode->screenshot1 =  url('private/image_store/anime_episode') . "/" . $filename1;
 		}
 
 		if ($request->hasFile('image2')) 
@@ -126,7 +126,7 @@ class EpisodeController extends Controller
 			$filename2 =$newEpisode->title .'_2.'.$request->file('image2')->getClientOriginalExtension();
 			$filename2 = str_replace(' ', '_', $filename2);
 	      	$request->file('image2')->move($destination_path, $filename2);
-		    $newEpisode->screenshot2 =  url('public/image_store/anime_episode') . "/" . $filename2;
+		    $newEpisode->screenshot2 =  url('private/image_store/anime_episode') . "/" . $filename2;
 		}
 
 		if ($request->hasFile('image3')) 
@@ -134,7 +134,7 @@ class EpisodeController extends Controller
 			$filename3 =$newEpisode->title .'_3.'.$request->file('image3')->getClientOriginalExtension();
 			$filename3 = str_replace(' ', '_', $filename3);
 	      	$request->file('image3')->move($destination_path, $filename3);
-		    $newEpisode->screenshot3 =  url('public/image_store/anime_episode') . "/" . $filename3;
+		    $newEpisode->screenshot3 =  url('private/image_store/anime_episode') . "/" . $filename3;
 		}
 
 		$newEpisode->save();

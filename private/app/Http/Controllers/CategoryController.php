@@ -27,10 +27,18 @@ class CategoryController extends Controller
     	return view('Admin/Category/category_anime');
     }
 
-    public function insertCategory()
+    public function insertCategory(Request $request)
     {
     	$newCategory = new CategoryAnime;
     	$newCategory->category = Input::get('category');
+		
+		$destination_path = base_path() . "/image_store/category_cover";
+      	$filename =$newCategory->category .'.'.$request->file('cover')->getClientOriginalExtension();
+      	
+		$filename = str_replace(' ', '_', $filename);
+      	$request->file('cover')->move($destination_path, $filename);
+
+	    $newCategory->cover =  url('private/image_store/category_cover') . "/" . $filename;
 		$newCategory->save();
 	}
 
@@ -38,6 +46,9 @@ class CategoryController extends Controller
 	{
 		$data = CategoryAnime::all();
 		foreach ($data as $category) {
+			$category['cover'] = " <a href=\" $category->cover \" target=\"__blank\"><button type=\"button\" class=\"btn btn-default\">
+								<span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\"></span></button></a>";
+
 			$category['action'] = "<div class=\"btn-group\">
 		                      <button type=\"button\" class=\"btn btn-info btn-flat\">Action</button>
 		                      <button type=\"button\" class=\"btn btn-info btn-flat dropdown-toggle\" data-toggle=\"dropdown\">
