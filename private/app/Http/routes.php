@@ -47,11 +47,14 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('admin/anime/add','AnimeController@addAnimeView');
 	Route::get('admin/anime/getAll','AnimeController@getAllAnime');
 	Route::get('admin/anime/get','AnimeController@getAnime');
+	Route::get('admin/anime/cover/{id}','AnimeController@getCover');
 	Route::post('admin/anime/get','AnimeController@getAnime');
 	Route::post('admin/anime/addAnime','AnimeController@insertAnime');
 	Route::post('admin/anime/update/{id}','AnimeController@updateAnime');
+	Route::post('admin/anime/update/cover/{id}','AnimeController@updateCover');
+	Route::post('admin/anime/status','AnimeController@getStatus');
+	Route::post('admin/anime/update/status/{id}','AnimeController@updateStatus');
 	Route::post('admin/anime/destroy','AnimeController@destroyAnime');
-
 
 	/* GET EPISODE ROUTES */
 
@@ -59,8 +62,10 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('admin/episode/add','EpisodeController@addEpisode');
 	Route::get('admin/episode/update/{id_eps}','EpisodeController@updateEpisodeV');
 	Route::post('admin/episode/update/{id_eps}','EpisodeController@updateEpisode');
+	Route::post('admin/episode/update/ss/{id_eps}','EpisodeController@updateScreenShot');
 	Route::post('admin/episode/destroy','EpisodeController@destroyEpisode');
 	Route::post('admin/episode/build','EpisodeController@insertEpisode');
+	Route::get('admin/episode/getTitle/{id}','EpisodeController@getTitle');
 	Route::get('admin/episode/getData/{id_anime}','EpisodeController@getEpisode');
 	Route::get('admin/episode/readmore/{id_anime}','EpisodeController@openedEpisode');
 	Route::get('admin/episode/readmore/{id_anime}',array('as' => 'afterUpdate','uses' => 'EpisodeController@openedEpisode'));
@@ -77,18 +82,45 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('admin/episode/getDownload/destroy','DownloadController@destroyDownload');
 
 
+	/* GET MOST WATCHED ROUTES */
+
+	Route::get('admin/mostWatched','MostWatchedController@index');
+	Route::post('admin/mostWatched/build','MostWatchedController@addMW');
+	Route::get('admin/mostWatched/get','MostWatchedController@getMW');
+	Route::post('admin/mostWatched/destroy','MostWatchedController@destroyMW');
+
+	/* GET PROFILE AND USER ROUTES */
+
+	Route::get('admin/user/dashboard','UserController@dashboard');
 	Route::get('admin/profile','UserController@profile');
 	Route::post('admin/profile/display','UserController@setDP');
 	Route::post('admin/profile/bio','UserController@editProfile');
 	Route::post('admin/profile/cpass','UserController@changePassword');
+	Route::get('admin/user/build','UserController@addUser');
+	Route::get('admin/user/manage','UserController@manageUser');
+	Route::get('admin/user/manageData','UserController@getAllUser');
+	Route::post('admin/user/userRole','UserController@getRole');
+	Route::post('admin/user/acl','UserController@updateRole');
+	Route::post('admin/user/build','UserController@buildUser');
+	Route::post('admin/user/destroy','UserController@destroyUser');
 
-	/* GET WEABO ROUTES */
+	/* GET WEABO ROUTES AJAX */
 	Route::post('weabo/search','WeaboController@searchResult');
 
+	
+	/* GET WEABO ROUTES */
+	Route::get('anime/list','WeaboController@animeList');
+	Route::get('anime/list/{alpha}','WeaboController@alphalist');
+	Route::get('anime/list/category/{category}','WeaboController@categorylist');
+	Route::get('anime/{id}','WeaboController@detail');
+	Route::get('anime/episode/{title}','WeaboController@detailEpisode');
+	Route::get('community','WeaboController@community');
+	Route::get('about_us','WeaboController@about_us');
+	Route::get('vocaloid','WeaboController@vocaloid');
+    Route::get('anime/category/data','WeaboController@getCategory');
 });
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
-    Route::get('/home', 'HomeController@index');
 });

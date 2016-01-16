@@ -21,7 +21,7 @@ class DownloadController extends Controller
 		//$data = DownloadPost::where('id_post','=',$id_post);
 		$data = AnimePost::where('id','=',$id_post)->first();
 			
-		return view('Admin\Episode\addDownload')->with('data_anime',$data);
+		return view('Admin.Episode.addDownload')->with('data_anime',$data);
 	}
 
 	public function getDownload($id_post)

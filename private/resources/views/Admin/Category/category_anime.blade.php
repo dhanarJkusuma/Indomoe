@@ -19,7 +19,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="anime_cover">Category Cover:</label>
+              <label class="col-sm-2 control-label" for="anime_cover">Category Cover: (Diutamakan 16:9) [Landscape] </label>
               <div class="col-sm-10">
                 <div class="input-group image-preview">
                   <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->

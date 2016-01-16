@@ -44,11 +44,10 @@
                     
                     </select>
                   </div>
-              
             </div>
             <input type="hidden" value="{{ csrf_token() }}" name="_token">
             <div class="form-group">
-              <label>Title Post</label>
+              <label>Title Post : [FORMAT PENULISAN : (SAKURASOU EPISODE 1 SUBTITLE INDONESIA)]</label>
               <input type="text" id="title_post" class="form-control" name="title" placeholder="Title Post">
             </div>
 

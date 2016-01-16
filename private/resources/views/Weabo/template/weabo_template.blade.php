@@ -4,11 +4,14 @@
 	<meta charset="UTF-8">
 	<title>Indomoe :: Moe Indonesia</title>
 	<link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/bootstrap.min.css') }}">
-	<link rel="stylesheet" href="{{ URL::asset('assets/css/nav-bar.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
+	<link rel="stylesheet" href="{{ URL::asset('assets/css/indomoe.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('assets/css/carding.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('assets/plugins/owl/css/owl.carousel.css') }}">
 	<link rel="stylesheet" href="{{ URL::asset('assets/plugins/owl/css/owl.theme.css') }}">
+	<link rel="stylesheet" href="{{ URL::asset('assets/css/ripple.css') }}">
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+	<script src="{{ URL::asset('assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
 	<style>
 		
 	</style>
@@ -18,22 +21,39 @@
 			background: url('{{ URL::asset("assets/img/azusa.jpg") }}'),url('{{ URL::asset("assets/img/azusa.jpg") }}'), #ffffff;
   			background-repeat: no-repeat;
   			background-position: top left,top right;
-			
+		}
+		.modal .modal-body {
+		    max-height: 420px;
+		    overflow-y: auto;
 		}
 
+		.loader
+		{
+			margin-top: 100px;
+			margin-right: auto;
+			margin-left: auto;
+			background: url('{{ URL::asset("assets/img/loader.gif") }}');
+			width: 64px;
+			height: 51px;
+		}
 	</style>
 </head>
 <body>
 		<div id="content-header">
-			<img src="{{ URL::asset('assets/img/moe.jpg') }}" alt=""  class="con-header">
+			<img src="{{ URL::asset('assets/img/indomoe_header.png') }}" alt=""  class="con-header">
 		</div>
 		
 		<nav class="horizontal-nav" id="horizontal-nav">
 		<ul>
-			<li><a href="">Home</a></li>
-			<li><a href="">List Anime</a></li>
-			<li><a href="">About Us</a></li>
+			<li><a href="{{ url('/') }}"> IndoMoe</a></li>
+			<li><a href="{{ url('vocaloid') }}"> Vocaloid</a></li>
+			<li><a href="{{ url('anime/list') }}"> List Anime</a></li>
+			<li><a href="{{ url('community') }}"> Community</a></li>
+			<li><a href="{{ url('about_us') }}"> About Us</a></li>
 			<li><a id="search-btn"><span class="glyphicon glyphicon-search"></span></a></li>
+			<div class="bugs" style="width:100%;margin-left:auto;margin-right:auto;text-align:center; margin-top:20px;">
+			<p>This Website is under improvement, Please report to us if you find some bugs to indomoe2015@gmail.com.</p>
+			</div>	
 		</ul>
 
 		<div class="search-box">
@@ -48,20 +68,24 @@
 			</form>
 		</div>
 	</nav>
-
+	
 	<div class="modal fade" id="search-result">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Modal Default</h4>
+            <h4 class="modal-title">Search Result</h4>
           </div>
           <div class="modal-body">
-            <p id="data-return"></p>
+            <div class="result">
+            	<p id="data-return"></p>
+	            <ul id="hasil-pencarian">
+	            	
+	            </ul>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
@@ -80,20 +104,13 @@
 	<script src="{{ URL::asset('assets/plugins/jQuery/jQuery-2.1.4.min.js') }}"></script>
 	<script src="{{ URL::asset('assets/plugins/owl/js/owl.carousel.min.js') }}"></script>
 	<script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
-   
+   	<script src="{{ URL::asset('assets/js/ripple.js') }}"></script>
+
 	<script>
 		$(document).ready(function(){      
-/*	 $(document).scroll(function () {
-        var scroll = $(this).scrollTop();
-        var topDist = $("#container").position();
-        if (scroll > topDist.top) {
-            $('nav').css({"position":"fixed","top":"0"});
-        } else {
-            $('nav').css({"position":"static","top":"auto"});
-        }
-    });
-
-*/		   	$('.owl-carousel').owlCarousel({
+		  	$('.on-going').tooltip();
+		  	$('.category').tooltip();
+		   	$('.onging-anime').owlCarousel({
 			    loop:true,
 				center:true,
 			    margin:25,
@@ -111,8 +128,27 @@
 			            items:5
 			        }
 			    }
-			})  
+			});
 
+		   	$('.category-anime').owlCarousel({
+			    loop:true,
+				center:true,
+			    margin:25,
+			    autoWidth:true,
+				autoplay:true,
+			    autoplayTimeout:3000,
+			    responsive:{
+			        0:{
+			            items:1
+			        },
+			        600:{
+			            items:3
+			        },
+			        1000:{
+			            items:5
+			        }
+			    }
+			});
 
 	
 		$('#search-btn').on('click',function(){
@@ -131,6 +167,7 @@
 		});	
 
 			$('#form-search').on('submit',function(){
+				$('#hasil-pencarian li').remove();
 				searching($(this));
 				$('#search-result').modal('show');
 				
@@ -140,13 +177,31 @@
 
 		function searching(form)
 		{
+			list = document.getElementById('hasil-pencarian');
 			$.ajax({
 		          url: "{{ url('weabo/search') }}",
 		          type: "POST",
 		          async:false,
 		          data: $(form).serialize(),
-		          success: function(result) {              
-					$('#data-return').text(result);
+		          success: function(result) { 
+		          	
+		          		$.each(result, function( i, val ) {
+							if((val.card).indexOf("card") > -1)
+							{
+								var entry = document.createElement('li');
+								$(entry).html(val.card);
+								list.appendChild(entry);	
+							}
+							else
+							{
+								var entry = document.createElement('li');
+								$(entry).html("<p>not found</p>");
+								list.appendChild(entry);	
+							}
+							
+			         		
+		          	});     
+		         	  
 		         },
 		         error: function(xhr, status, error) {
 		         		alert(xhr.responseText);

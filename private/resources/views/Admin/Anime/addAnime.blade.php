@@ -57,8 +57,8 @@
             </div>
 
             <div class="form-group">
-              <label>Publisher</label>
-              <input type="text" id="publisher" class="form-control" name="publisher" placeholder="Publisher">
+              <label>Credit</label>
+              <input type="text" id="credit" class="form-control" name="credit" placeholder="Credit">
             </div>
 
             
@@ -107,7 +107,7 @@
             </div>
 
             <div class="form-group">
-              <label class="control-label " for="anime_cover">Anime Cover:</label>
+              <label class="control-label " for="anime_cover">Anime Cover: ( Diutamakan 5:7 || 4:5 ) [ Potrait ]  </label>
                   <div class="input-group image-preview">
                     <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
                     <span class="input-group-btn">

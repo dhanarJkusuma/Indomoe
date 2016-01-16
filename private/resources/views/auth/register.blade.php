@@ -10,7 +10,7 @@
           <h3 class="box-title">User Registering...</h3>
         </div><!-- /.box-header -->
         <!-- form start -->
-        <form id="category-form" action="{{ url('/register') }}" class="form-horizontal" method="POST">
+        <form id="category-form" action="{{ url('admin/user/build') }}" class="form-horizontal" method="POST">
           <div class="box-body">
            {!! csrf_field() !!}
             <div class="form-group">
@@ -29,12 +29,6 @@
               <label for="category" class="col-sm-2 control-label">Password</label>
               <div class="col-sm-10">
                 <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="category" class="col-sm-2 control-label">Password Confirmation</label>
-              <div class="col-sm-10">
-                <input type="password" class="form-control" name="password_confirmation" id="password" placeholder="Password">
               </div>
             </div>
             <div class="form-group">

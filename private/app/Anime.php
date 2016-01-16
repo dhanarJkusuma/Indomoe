@@ -12,4 +12,9 @@ class Anime extends Model
     {
     	return $this->hasMany('App\AnimePost','id_anime');
     }
+
+    public function MostWatched()
+    {
+    	return $this->hasOne('App\Most_watched');
+    }
 }

@@ -10,7 +10,16 @@ class AnimePost extends Model
 
     public function Download()
     {
-    	return $this->hasMany('App\DownloadPost','id_post');
+    	return $this->hasMany('App\DownloadPost','id_post','id');
     }
 
+    public function User()
+    {
+    	return $this->belongsTo('App\User','createdBy');
+    }
+
+    public function Anime()
+    {
+    	return $this->belongsTo('App\Anime','id_anime');
+    }
 }

@@ -7,24 +7,22 @@ use Illuminate\Http\Request;
 
 use Auth;
 
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Anime;
 use Illuminate\Support\Facades\Input;
+
 class AnimeController extends Controller
 {
 	
 	public function __construct()
 	{
-
-
 		return $this->middleware('auth');
 	}
 
 	public function anime()
 	{
-		return view('Admin/anime/anime');
+		return view('Admin.Anime.anime');
 	}
 
 	public function getAllAnime()
@@ -32,25 +30,18 @@ class AnimeController extends Controller
 		$data = Anime::all();
 		foreach ($data as $anime) 
 		{
-			$anime['cover'] = " <a href=\" $anime->cover \" target=\"__blank\"><button type=\"button\" class=\"btn btn-default\">
-								<span class=\"glyphicon glyphicon-eye-open\" aria-hidden=\"true\"></span></button></a>";
-
-			$anime['action'] = "<div class=\"btn-group\">
-		                      <button type=\"button\" class=\"btn btn-info btn-flat\">Action</button>
-		                      <button type=\"button\" class=\"btn btn-info btn-flat dropdown-toggle\" data-toggle=\"dropdown\">
-		                        <span class=\"caret\"></span>
-		                        <span class=\"sr-only\">Toggle Dropdown</span>
-		                      </button>
-		                      <ul class=\"dropdown-menu\" role=\"menu\">
-		                        <li><a data-id='$anime->id' href=\"#\" data-toggle=\"modal\" class=\"edit-btn\" data-target=\"#edit-form\">Edit</a></li>
-		                        <li class=\"divider\"></li>
-		                        <li><a data-id='$anime->id' data-title='$anime->title' href=\"#\" data-toggle=\"modal\" class=\"link-delete\" data-target=\"#delete-form\" >Delete</a></li>
-		                      </ul>
-		                    </div>";
+			$anime['rating'] = substr($anime->rating, 0,strpos($anime->rating, '('));
+			$anime['action'] = "<a data-id='$anime->id' href=\"#\" data-toggle=\"modal\" class=\"action-btn\" data-target=\"#action-form\"><button type=\"button\" class=\"btn btn-success\"><span class=\"glyphicon glyphicon-pencil\"></span> Action</button></a>";
 		}
 
 		$anime_json = array('data' => $data);
 		return response()->json($anime_json);
+	}
+
+	public function getCover($id)
+	{
+		$data = Anime::where('id','=',$id)->first();
+		return $data->cover;
 	}
 
 	public function getAnime()
@@ -61,11 +52,17 @@ class AnimeController extends Controller
 
 	}
 
+	public function getStatus()
+	{
+		$id = Input::get('id');
+		$anime = Anime::where('id','=',$id)->first();
+		return $anime->status;
+	}
+
 
 	public function addAnimeView()
 	{
-		return view('Admin/Anime/addAnime');
-
+		return view('Admin.Anime.addAnime');
 	}
 
 	public function insertAnime(Request $request)
@@ -81,17 +78,16 @@ class AnimeController extends Controller
 		$filename = str_replace(' ', '_', $filename);
       	$request->file('image')->move($destination_path, $filename);
 
-
+  		$anime->credit = Input::get('credit');
 	    $anime->cover =  url('private/image_store/anime_cover') . "/" . $filename;
 	    $anime->studio = Input::get('studio');
 	    $anime->rating = Input::get('rating');
 	    $anime->description = Input::get('description');
 	    $anime->season = Input::get('season');
-	    $anime->publisher = Input::get('publisher');
 	    $anime->year = Input::get('year');
 	    $anime->status = Input::get('status');
+
 	    $anime->save();
-		return Input::get('category');
 	}
 
 	public function updateAnime($id)
@@ -103,16 +99,47 @@ class AnimeController extends Controller
   		$anime->rating = Input::get('rating');
   		$anime->description = Input::get('description');
   		$anime->season = Input::get('season');
-  		$anime->publisher = Input::get('publisher');
+  		$anime->credit = Input::get('credit');
 	    $anime->year = Input::get('year');
 	    $anime->status = Input::get('status');
   		$anime->save();
-  		return $_POST['title'];
+   	}
+
+   	public function updateCover($id,Request $request)
+   	{
+   		$anime = Anime::where('id','=',$id)->first();
+   		
+   		//Delete Old Cover
+   		$url = base_path() . "/image_store/anime_cover/";
+   		$old_filename = substr($anime->cover, strpos($anime->cover, "anime_cover")+12);
+   		unlink($url.$old_filename);
+   		//End Delete Old Cover
+
+   		//Move New Cover
+   		$destination_path = base_path() . "/image_store/anime_cover";
+      	$new_filename =$anime->title .'.'.$request->file('image')->getClientOriginalExtension();
+		$new_filename = str_replace(' ', '_', $new_filename);
+      	$request->file('image')->move($destination_path, $new_filename);
+   		//End Move
+
+   		$anime->cover = url('private/image_store/anime_cover') . "/" . $new_filename;
+   		$anime->save();
+   	}
+
+   	public function updateStatus($id)
+   	{
+   		$anime = Anime::where('id','=',$id)->first();
+   		$anime->status = Input::get('status');
+   		$anime->save();
    	}
 
    	public function destroyAnime()
    	{
    		$id = Input::get('id_anime');
+   		$destroyAnime = Anime::where('id','=',$id)->first();
+   		$url = base_path() . "/image_store/anime_cover/";
+   		$filename = substr($destroyAnime->cover, strpos($destroyAnime->cover, "anime_cover")+12);
+   		unlink($url.$filename);
    		Anime::destroy($id);
    		exit();
    	}

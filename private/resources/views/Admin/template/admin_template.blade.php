@@ -8,7 +8,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/datatables/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
@@ -23,6 +22,10 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/ionslider/ion.rangeSlider.skinNice.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/select2/select2.min.css') }}">
     <style>
+      .sidebar-mini
+      {
+        padding-right: 0;
+      }
       .content-inside
       {
         padding: 50px;
@@ -59,6 +62,9 @@
           width: 400px;
           height: 300px;
           margin: -75px 0 0 -100px;
+      }
+      .modal {
+          overflow-y:auto;
       }
     </style>
   </head>
@@ -177,19 +183,21 @@
               <a href="#">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
               </a>
-              
             </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-users"></i>
-                <span>User Management</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="{{ url('admin/registering') }}"><i class="fa fa-circle-o"></i> Register </a></li>
-                <li><a href="{{ url('admin/users') }}"><i class="fa fa-circle-o"></i> User Management </a></li>
-              </ul>
-            </li>
+            @if(Auth::user()->hak_akses=="superadmin")
+              <li class="treeview">
+                <a href="#">
+                  <i class="fa fa-users"></i>
+                  <span>User Management </span>
+                  
+                  <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="{{ url('admin/user/build') }}"><i class="fa fa-circle-o"></i> Register </a></li>
+                  <li><a href="{{ url('admin/user/manage') }}"><i class="fa fa-circle-o"></i> User Management </a></li>
+                </ul>
+              </li>
+            @endif
             <li class="treeview">
               <a href="#">
                 <i class="fa  fa-database"></i>
@@ -212,6 +220,11 @@
                     <li><a href="{{ url('admin/episode/add') }}"><i class="fa fa-pencil"></i> Add New Episode </a></li>
                   </ul>
                 </li>
+                 <li>
+                  <a href="{{ url('admin/mostWatched') }}">
+                    <i class="fa fa-star"></i> <span>Most Watched Anime</span>
+                  </a>
+                </li>
                 <li><a href="{{ url('admin/category') }}"><i class="fa fa-tag"></i> Category Anime</a></li>
               </ul>
             </li>
@@ -227,12 +240,14 @@
                 <li><a href="pages/layout/boxed.html"><i class="fa fa-tag"></i> Category Music</a></li>
               </ul>
             </li> 
+           
             <li>
               <a href="pages/mailbox/mailbox.html">
                 <i class="fa fa-envelope"></i> <span>Mailbox</span>
                 <small class="label pull-right bg-yellow">12</small>
               </a>
             </li>
+
           </ul>
         </section>
         <!-- /.sidebar -->
@@ -280,7 +295,6 @@
     <!-- Bootstrap 3.3.5 -->
     <script src="{{ URL::asset('assets/plugins/select2/select2.full.min.js') }}"></script>
     <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/ionslider/ion.rangeSlider.min.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/bootstrap-slider/bootstrap-slider.js') }}"></script>
     
     <script src="{{ URL::asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -297,12 +311,10 @@
     <!-- SlimScroll 1.3.0 -->
     <script src="{{ URL::asset('assets/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
     <!-- ChartJS 1.0.1 -->
-    <script src="{{ URL::asset('assets/plugins/chartjs/Chart.min.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <!-- AdminLTE for demo purposes -->
     <script src="{{ URL::asset('assets/dist/js/demo.js') }}"></script>
-   
-    
+
          
 
   </body>

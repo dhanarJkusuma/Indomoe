@@ -2,295 +2,124 @@
 
 @section('content')
 
-<div class="on-going">
+<div class="on-going" data-toggle="tooltip" data-placement="left" title="Swipe me!">
 	<div class="page-header">
-	  <h1>ANIME  <small><span class="label label-warning">ONGOING</span></small></h1>
+	  <h3>  <small><span class="label label-warning">ONGOING</span></small></h3>
 	</div>
-	<div class="owl-carousel">
+	<div class="onging-anime">
+		@foreach($on_anime as $anime)
 		<div class="item">      	
-		    <a href="">
-		    <article class="ind-card">
-				<div class="ind-header">
-					<img src="{{ URL::asset('assets/img/moe.jpg') }}" class="img-header lazyOwl" alt="">
+		    <article class="general-card">
+				<div class="general-header on-header">
+					<img src="{{ $anime->cover }}" class="img-header lazyOwl" alt="">
 				</div>
-				<div class="ind-content">
-					<div class="ind-title">
-						「アニメ」 ダンジﾖンに出会いを求めるのは間違っているだろうか
-					</div>
-					<div class="readmore">
-						<span class="glyphicon glyphicon-eye-open"></span> Read More...
+				<div class="general-content">
+					<div class="general-title">
+						{{ $anime->title }}
 					</div>
 				</div>
+					<div class="general-bottom">
+						 <button onclick="location.href='{{url('anime')}}/{{$anime->id}}';" class="ripple-button ripple" data-ripple-color="#ffca28" style="background:white; color: #ff5722; font-size:13px;">READ MORE</button>
+					</div>
+				
 			</article>
-			</a>
       	</div>
-      	<div class="item">      	
-		    <a href="">
-		    <article class="ind-card">
-				<div class="ind-header">
-					<img src="{{ URL::asset('assets/img/header.png') }}" class="img-header lazyOwl" alt="">
-				</div>
-				<div class="ind-content">
-					<div class="ind-title">
-						「アニメ」 ダンジﾖンに出会いを求めるのは間違っているだろうか
-					</div>
-					<div class="readmore">
-						<span class="glyphicon glyphicon-eye-open"></span> Read More...
-					</div>
-				</div>	
-			</article>
-			</a>
-      	</div>
-      	<div class="item">      	
-		    <a href="">
-		    <article class="ind-card">
-				<div class="ind-header">
-					<img src="{{ URL::asset('assets/img/azusa.jpg') }}" class="img-header lazyOwl" alt="">
-				</div>
-				<div class="ind-content">
-					<div class="ind-title">
-						「アニメ」 ダンジﾖンに出会いを求めるのは間違っているだろうか
-					</div>
-					<div class="readmore">
-						<span class="glyphicon glyphicon-eye-open"></span> Read More...
-					</div>
-				</div>	
-			</article>
-			</a>
-      	</div>	
+      	@endforeach
 	</div>
 </div>
 
 <div class="release">
 	<div class="page-header">
-	  <h1>ANIME  <small><span class="label label-warning">NEW RELEASE</span></small></h1>
+	  <h3><small><span class="label label-warning">NEW RELEASE</span></small></h3>
 	</div>
 	<div class="item-release">
 		<ul>
-			<li id="re-item">
+		@foreach($posts as $post)
+		<li id="re-item">
+			<a href="{{url('anime/episode')}}/{{str_replace(' ', '_', $post->title)}}">
 				<div class="row">
 					<div class="list-card col-md-11  padding-top:5px;">
-						<span class="label label-warning notif" style="float:right;">NEW</span>
-						
+						@if($post->now == 0)
+							<span class="label label-warning notif" style="float:right;">NEW</span>
+						@endif
 						<div class="thumbnails" >
-							<img src="{{ URL::asset('assets/img/header.png') }}" width="170" height="100"  class="img-thumb" alt="">
+							<img src="{{ $post->screenshot1 }}" width="170" height="100"  class="img-thumb" alt="">
 						</div>
 						<div class="desc col-md-9">
 							<div class="title">
 								<h4 style="color:#8a8a8a;">
 									<b>
-										Yosuga no Sora Episode 10
+										{{ $post->title }}
 									</b>
 								</h4>
 							</div>
-							<div class="details">								
-								Post by <span class="label label-warning">KUKUH</span> 
-								&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span> [Release Date]   December,12 
-								<a href="" class="more"> <span class="badge">More Episode</span></a>
-								
+							<div class="details">			
+								Posted by <span class="label label-warning">{{ $post->User->name }}</span> 
+								&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span>{{ date_format($post->created_at, 'g:ia \o\n l jS F Y') }} 
+								<a href="{{ url('anime') }}/{{ $post->id_anime }}" class="more"> <span class="badge">More Episode</span></a>			
 							</div>
-
 						</div>		
 					</div>
 				</div>
-			</li>
-			<li id="re-item">
-				<div class="row">
-					<div class="list-card col-md-11  padding-top:5px;">
-						<span class="label label-warning notif" style="float:right;">NEW</span>
-						
-						<div class="thumbnails" >
-							<img src="{{ URL::asset('assets/img/header.png') }}" width="170" height="100"  class="img-thumb" alt="">
-						</div>
-						<div class="desc col-md-9">
-							<div class="title">
-								<h4 style="color:#8a8a8a;">
-									<b>
-										Yosuga no Sora Episode 10
-									</b>
-								</h4>
-							</div>
-							<div class="details">								
-								Post by <span class="label label-warning">KUKUH</span> 
-								&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span> [Release Date]   December,12 
-								<a href="" class="more"> <span class="badge">More Episode</span></a>
-								
-							</div>
-
-						</div>		
-					</div>
-				</div>
-			</li>
-			<li id="re-item">
-				<div class="row">
-					<div class="list-card col-md-11  padding-top:5px;">
-						<span class="label label-warning notif" style="float:right;">NEW</span>
-						
-						<div class="thumbnails" >
-							<img src="{{ URL::asset('assets/img/header.png') }}" width="170" height="100"  class="img-thumb" alt="">
-						</div>
-						<div class="desc col-md-9">
-							<div class="title">
-								<h4 style="color:#8a8a8a;">
-									<b>
-										Yosuga no Sora Episode 10
-									</b>
-								</h4>
-							</div>
-							<div class="details">								
-								Post by <span class="label label-warning">KUKUH</span> 
-								&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span> [Release Date]   December,12 
-								<a href="" class="more"> <span class="badge">More Episode</span></a>
-								
-							</div>
-
-						</div>		
-					</div>
-				</div>
-			</li>
-			<li id="re-item">
-				<div class="row">
-					<div class="list-card col-md-11  padding-top:5px;">
-						<span class="label label-warning notif" style="float:right;">NEW</span>
-						
-						<div class="thumbnails" >
-							<img src="{{ URL::asset('assets/img/header.png') }}" width="170" height="100"  class="img-thumb" alt="">
-						</div>
-						<div class="desc col-md-9">
-							<div class="title">
-								<h4 style="color:#8a8a8a;">
-									<b>
-										Yosuga no Sora Episode 10
-									</b>
-								</h4>
-							</div>
-							<div class="details">								
-								Post by <span class="label label-warning">KUKUH</span> 
-								&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span> [Release Date]   December,12 
-								<a href="" class="more"> <span class="badge">More Episode</span></a>
-								
-							</div>
-
-						</div>		
-					</div>
-				</div>
-			</li>
-			<li id="re-item">
-				<div class="row">
-					<div class="list-card col-md-11  padding-top:5px;">
-						<span class="label label-warning notif" style="float:right;">NEW</span>
-						
-						<div class="thumbnails" >
-							<img src="{{ URL::asset('assets/img/header.png') }}" width="170" height="100"  class="img-thumb" alt="">
-						</div>
-						<div class="desc col-md-9">
-							<div class="title">
-								<h4 style="color:#8a8a8a;">
-									<b>
-										Yosuga no Sora Episode 10
-									</b>
-								</h4>
-							</div>
-							<div class="details">								
-								Post by <span class="label label-warning">KUKUH</span> 
-								&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span> [Release Date]   December,12 
-								<a href="" class="more"> <span class="badge">More Episode</span></a>
-								
-							</div>
-
-						</div>		
-					</div>
-				</div>
-			</li>
-			<li id="re-item">
-				<div class="row">
-					<div class="list-card col-md-11  padding-top:5px;">
-						<span class="label label-warning notif" style="float:right;">NEW</span>
-						
-						<div class="thumbnails" >
-							<img src="{{ URL::asset('assets/img/header.png') }}" width="170" height="100"  class="img-thumb" alt="">
-						</div>
-						<div class="desc col-md-9">
-							<div class="title">
-								<h4 style="color:#8a8a8a;">
-									<b>
-										Yosuga no Sora Episode 10
-									</b>
-								</h4>
-							</div>
-							<div class="details">								
-								Post by <span class="label label-warning">KUKUH</span> 
-								&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span> [Release Date]   December,12 
-								<a href="" class="more"> <span class="badge">More Episode</span></a>
-								
-							</div>
-
-						</div>		
-					</div>
-				</div>
-			</li>
-			<li id="re-item">
-				<div class="row">
-					<div class="list-card col-md-11  padding-top:5px;">
-						<span class="label label-warning notif" style="float:right;">NEW</span>
-						
-						<div class="thumbnails" >
-							<img src="{{ URL::asset('assets/img/header.png') }}" width="170" height="100"  class="img-thumb" alt="">
-						</div>
-						<div class="desc col-md-9">
-							<div class="title">
-								<h4 style="color:#8a8a8a;">
-									<b>
-										Yosuga no Sora Episode 10
-									</b>
-								</h4>
-							</div>
-							<div class="details">								
-								Post by <span class="label label-warning">KUKUH</span> 
-								&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span> [Release Date]   December,12 
-								<a href="" class="more"> <span class="badge">More Episode</span></a>
-								
-							</div>
-
-						</div>		
-					</div>
-				</div>
-			</li>
-			<li id="re-item">
-				<div class="row">
-					<div class="list-card col-md-11  padding-top:5px;">
-						<span class="label label-warning notif" style="float:right;">NEW</span>
-						
-						<div class="thumbnails" >
-							<img src="{{ URL::asset('assets/img/header.png') }}" width="170" height="100"  class="img-thumb" alt="">
-						</div>
-						<div class="desc col-md-9">
-							<div class="title">
-								<h4 style="color:#8a8a8a;">
-									<b>
-										Yosuga no Sora Episode 10
-									</b>
-								</h4>
-							</div>
-							<div class="details">								
-								Post by <span class="label label-warning">KUKUH</span> 
-								&nbsp;&nbsp;<span class="glyphicon glyphicon-calendar"></span> [Release Date]   December,12 
-								<a href="" class="more"> <span class="badge">More Episode</span></a>
-								
-							</div>
-
-						</div>		
-					</div>
-				</div>
-			</li>
+			</a>
+		</li>
+		@endforeach
 		</ul>
 	</div>
+	{!! $posts->links() !!}
 </div>	
-<div class="category-anime">
+<div class="category" data-toggle="tooltip" data-placement="left" title="Swipe me!">
 	<div class="page-header">
-	  <h1>ANIME  <small><span class="label label-warning">CATEGORY</span></small></h1>
+	  <h3>  <small><span class="label label-warning">CATEGORY</span></small></h3>
+	</div>
+	<div class="category-anime">
+		@foreach($category as $cat)
+		<div class="item">      	
+		    <a href="{{ url('anime/list/category/') }}/{{ $cat->category }}">
+		    <article class="category-card">
+				<div class="category-header">
+					<img src="{{ $cat->cover }}" class="img-category lazyOwl" alt="">
+				</div>
+				<div class="category-content">
+					<div class="category-title">
+						{{ $cat->category }}
+					</div>
+				</div>
+			</article>
+			</a>
+      	</div>
+      	@endforeach
 	</div>
 </div>
+
+<div class="most-watched">
+	<div class="page-header">
+	  <h3>  <small><span class="label label-warning">MOST WATCHED</span></small></h3>
+	</div>
+	<ul>
+		@foreach($most as $m)
+		<li>
+			<a href="{{url('anime')}}/{{$m->id_anime}}">
+			    <article class="general-card">
+					<div class="general-header">
+						<img src="{{ $m->cover }}" class="img-header lazyOwl" alt="">
+					</div>
+					<div class="general-content">
+						<div class="general-title">
+							{{ $m->title }}
+						</div>
+					</div>
+						<div class="general-bottom">
+							<button onclick="location.href='{{url('anime')}}/{{$m->id_anime}}';" class="ripple-button ripple" data-ripple-color="#ffca28" style="background:white; color: #ff5722; font-size:13px;">READ MORE</button>		
+						</div>
+				</article>
+			</a>
+		</li>
+		@endforeach
+	</ul>
+</div>
+
+
 
 	
 @stop

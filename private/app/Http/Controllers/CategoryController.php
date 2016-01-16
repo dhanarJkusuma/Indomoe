@@ -19,12 +19,12 @@ class CategoryController extends Controller
 
     public function index()
     {
-    	return view('Admin/dashboard');
+    	return view('Admin.dashboard');
     }
 
     public function category()
     {
-    	return view('Admin/Category/category_anime');
+    	return view('Admin.Category.category_anime');
     }
 
     public function insertCategory(Request $request)
